@@ -43,19 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
-          exclude-paths: |
-            node_modules/
-            .git/
-            src/
-            scripts/
-            website/
-            *.md
-            .gitignore
-            .eslintrc.json
-            tsconfig.json
-            package.json
-            package-lock.json
+          path: 'docs'
       
       - name: Deploy to GitHub Pages
         id: deployment
