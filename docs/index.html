@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plain Rich Editor</title>
-  <link rel="stylesheet" href="/plain-rich-editor/dist/styles/editor.css">
+  <link rel="stylesheet" href="dist/styles/editor.css">
   <style>
     * {
       margin: 0;
@@ -177,7 +177,7 @@
 
     async function initEditor() {
       try {
-        const { RichEditor } = await import('/plain-rich-editor/dist/index.js');
+        const { RichEditor } = await import('dist/index.js');
         
         const container = document.getElementById('editor-playground');
         
