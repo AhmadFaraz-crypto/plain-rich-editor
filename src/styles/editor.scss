@@ -1,0 +1,368 @@
+/**
+ * Main editor styles
+ */
+
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+@use './toolbar.scss';
+
+// Global body and html height control to prevent page scroll
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.rich-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-family: $font-family-base;
+  overflow: hidden;
+  padding: 0;
+}
+
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: $content-max-width;
+  margin: 0 auto;
+  max-height: 95vh;
+  height: 95vh;
+  flex: 0 1 auto;
+  gap: 0;
+}
+
+.editor-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 100%;
+  max-height: calc(95vh - 60px);
+  height: calc(95vh - 60px);
+  gap: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.editor-content-container {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  transition: width 0.3s ease;
+  box-sizing: border-box;
+}
+
+.editor-content {
+  min-height: calc(95vh - 60px);
+  outline: none;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background: $color-background;
+  padding: $content-inner-padding;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  p {
+    margin: 0 0 $spacing-md 0;
+    padding: 0;
+    min-height: 1.2em;
+    line-height: $line-height-base;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:empty::before {
+      content: '\200B'; // Zero-width space for empty paragraph
+    }
+
+    // Handle BR tags - no extra spacing, just line break
+    br {
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 0 !important;
+      height: 0 !important;
+      display: block !important;
+      content: "";
+      font-size: 0 !important;
+    }
+
+    // Multiple consecutive BR tags should not accumulate spacing
+    br + br {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      line-height: 0 !important;
+      height: 0 !important;
+    }
+  }
+
+  // BR tags outside paragraphs should not add extra spacing
+  br {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    height: 0 !important;
+    display: block !important;
+  }
+
+  // Handle long words and URLs - ensure all elements respect container width
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  // Specifically handle inline elements that might cause overflow
+  // Keep them inline but ensure they wrap
+  span, strong, em, u, b, i {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    box-sizing: border-box;
+  }
+
+  // Formatting classes
+  .format-bold {
+    font-weight: bold;
+  }
+
+  .format-italic {
+    font-style: italic;
+  }
+
+  .format-underline {
+    text-decoration: underline;
+  }
+
+  // Selection styling
+  ::selection {
+    background: #b3d4fc;
+    color: #000;
+  }
+}
+
+// HTML Preview Area
+.html-preview-container {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0;
+  background: $color-background;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  min-height: calc(95vh - 60px);
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+}
+
+.html-preview-header {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: #f8f8f8;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  flex-shrink: 0;
+  min-height: 40px;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1;
+}
+
+.html-preview-tabs {
+  display: flex !important;
+  gap: $spacing-xs;
+  flex-shrink: 0;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.html-preview-tab {
+  padding: $spacing-xs $spacing-sm;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+  transition: all 0.2s ease;
+  display: inline-block;
+  visibility: visible;
+  opacity: 1;
+
+  &:hover {
+    background: #e8e8e8;
+    color: #333;
+  }
+
+  &.active {
+    background: $color-background;
+    border-color: #d0d0d0;
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+.html-preview-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.html-preview-content {
+  display: none;
+  flex: 1;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: $spacing-md;
+  background: $color-background;
+  box-sizing: border-box;
+  min-height: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  &.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Show rendered HTML content (styles should be applied)
+  > div {
+    width: 100%;
+    min-height: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow-x: hidden;
+    max-width: 100%;
+    
+    // Allow styles to be applied
+    p {
+      margin: 0 0 $spacing-md 0;
+      line-height: $line-height-base;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+      overflow-x: hidden;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    // Handle all elements in preview
+    * {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+    }
+  }
+}
+
+.html-preview-code {
+  display: none;
+  flex: 1;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  padding: $spacing-md;
+  background: #f8f8f8;
+  border: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  box-sizing: border-box;
+  min-height: 0;
+
+  &.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  code {
+    display: block;
+    white-space: pre-wrap; // Allow wrapping in code view too
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all; // More aggressive breaking for code
+    color: #333;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+// Print styles
+@media print {
+  .rich-editor {
+    border: none;
+    height: auto;
+  }
+
+  .editor-toolbar-container {
+    display: none;
+  }
+
+  .editor-content-container {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .editor-content {
+    padding: 0;
+    max-width: 100%;
+  }
+}
+

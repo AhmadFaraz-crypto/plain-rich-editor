@@ -1,0 +1,232 @@
+/**
+ * Toolbar styles - Clean minimalist design
+ */
+
+@use 'sass:color';
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+.editor-toolbar-container {
+  border-top: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: none;
+  @include gradient-toolbar;
+  padding: $toolbar-padding;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 0;
+  box-shadow: $toolbar-shadow;
+  position: relative;
+  z-index: $z-index-toolbar;
+  min-height: $toolbar-height + 20px;
+  height: auto;
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+}
+
+.toolbar-group {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.toolbar-separator {
+  width: $toolbar-separator-width;
+  height: $toolbar-separator-height;
+  background: #e0e0e0;
+  margin: 0 $spacing-md;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.toolbar-button {
+  min-width: $toolbar-button-min-width;
+  height: $toolbar-button-height;
+  padding: 4px 6px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  color: $color-text-primary;
+  @include button-base;
+  @include focus-visible;
+
+  &:hover:not(:disabled) {
+    @include button-hover;
+  }
+
+  &:active:not(:disabled) {
+    @include button-active;
+  }
+
+  &:disabled {
+    @include button-disabled;
+  }
+
+  &.active {
+    background: $color-background-hover;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.toolbar-dropdown {
+  height: $toolbar-button-height;
+  padding: $toolbar-dropdown-padding;
+  padding-right: 30px; // Extra padding for arrow icon
+  font-size: $font-size-medium;
+  font-weight: $font-weight-normal;
+  color: $color-text-primary;
+  min-width: 100px;
+  @include input-base;
+  @include input-focus;
+  @include focus-visible;
+  position: relative;
+  
+  // Custom arrow icon - keep it visible on hover
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px;
+  background-attachment: local; // Keep background on hover
+
+  &:hover {
+    @include input-hover;
+    // Ensure arrow stays visible on hover
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+  }
+
+  &:focus {
+    // Ensure arrow stays visible on focus
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+  }
+
+  option {
+    padding: 6px;
+  }
+}
+
+// View Mode Buttons (Editor, Preview, Both)
+.html-toggle-button {
+  min-width: auto;
+  padding: 4px 12px;
+  margin: 0 2px;
+  transition: background 0.2s ease, color 0.2s ease;
+  border: 1px solid #e0e0e0;
+
+  &:first-of-type {
+    border-radius: $border-radius-sm 0 0 $border-radius-sm;
+    margin-left: 0;
+  }
+
+  &:last-of-type {
+    border-radius: 0 $border-radius-sm $border-radius-sm 0;
+    margin-right: 0;
+  }
+
+  &:not(:first-of-type):not(:last-of-type) {
+    border-radius: 0;
+    border-left: none;
+  }
+
+  &:hover:not(.active) {
+    background: $color-background-hover;
+  }
+
+  &.active {
+    background: $color-primary;
+    color: #ffffff;
+    border-color: $color-primary;
+    font-weight: $font-weight-medium;
+    z-index: 1;
+    position: relative;
+    
+    &:hover {
+      background: color.adjust($color-primary, $lightness: -10%);
+      border-color: color.adjust($color-primary, $lightness: -10%);
+    }
+  }
+}
+
+.toolbar-select {
+  height: $toolbar-button-height;
+  padding: $toolbar-dropdown-padding;
+  padding-right: 30px; // Extra padding for arrow icon
+  font-size: $font-size-medium;
+  font-weight: $font-weight-normal;
+  color: $color-text-primary;
+  min-width: 120px;
+  @include input-base;
+  @include input-focus;
+  @include focus-visible;
+  
+  // Custom arrow icon - keep it visible on hover
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px;
+  background-attachment: local; // Keep background on hover
+
+  &:hover {
+    @include input-hover;
+    // Ensure arrow stays visible on hover
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+  }
+
+  &:focus {
+    // Ensure arrow stays visible on focus
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232c3e50' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+  }
+}
+
+.toolbar-color-input {
+  width: 32px;
+  height: $toolbar-button-height;
+  padding: 2px;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  background: transparent;
+  transition: background-color $transition-fast;
+  @include focus-visible;
+
+  &:hover {
+    background: $color-background-hover;
+  }
+
+  // Hide the default color input style on some browsers
+  &::-webkit-color-swatch-wrapper {
+    padding: 2px;
+    border: none;
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: $border-radius-sm;
+  }
+}
+

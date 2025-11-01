@@ -1,0 +1,100 @@
+/**
+ * SCSS Mixins - Reusable style patterns
+ */
+
+@use './variables.scss' as *;
+
+// Button states - Clean flat design
+@mixin button-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-radius: $border-radius-sm;
+  transition: background-color $transition-fast;
+  box-shadow: none;
+  color: $color-text-primary;
+  font-weight: $font-weight-normal;
+  padding: 4px 6px;
+}
+
+@mixin button-hover {
+  background: $color-background-hover;
+}
+
+@mixin button-active {
+  background: $color-background-active;
+}
+
+@mixin button-disabled {
+  opacity: $opacity-disabled;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+@mixin button-primary {
+  background: transparent;
+  color: $color-text-primary;
+
+  &:hover {
+    background: $color-background-hover;
+  }
+  
+  &.active {
+    background: $color-background-hover;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Input states - Clean flat design
+@mixin input-base {
+  border: none;
+  background: transparent;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color $transition-fast;
+  color: $color-text-primary;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+@mixin input-hover {
+  background: $color-background-hover;
+}
+
+@mixin input-focus {
+  outline: none;
+  background: $color-background-hover;
+}
+
+// Focus visible (for accessibility)
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Gradient backgrounds - Removed for flat design
+@mixin gradient-toolbar {
+  background: $toolbar-background;
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

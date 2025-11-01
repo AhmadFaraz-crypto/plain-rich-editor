@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rich Editor</title>
+  <link rel="stylesheet" href="dist/styles/editor.css">
+</head>
+<body>
+  <div id="editor-root"></div>
+  <script type="module">
+    import { RichEditor } from './dist/index.js';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('editor-root');
+      if (container) {
+        const editor = new RichEditor(container);
+        editor.focus();
+      }
+    });
+  </script>
+</body>
+</html>
+
