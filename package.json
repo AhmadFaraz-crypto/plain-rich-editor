@@ -46,12 +46,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/AhmadFaraz-crypto/plain-rich-editor.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/AhmadFaraz-crypto/plain-rich-editor/issues"
   },
-  "homepage": "",
+  "homepage": "https://ahmadfaraz-crypto.github.io/plain-rich-editor/",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
