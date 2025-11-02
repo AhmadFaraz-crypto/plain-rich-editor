@@ -9,14 +9,14 @@
  * ## Installation
  *
  * ```bash
- * npm install word-editor
+ * npm install plain-rich-editor
  * ```
  *
  * ## Basic Usage
  *
  * ```typescript
- * import { RichEditor } from 'word-editor';
- * import 'word-editor/dist/styles/editor.css';
+ * import { RichEditor } from 'plain-rich-editor';
+ * import 'plain-rich-editor/dist/styles/editor.css';
  *
  * const container = document.getElementById('editor');
  * const editor = new RichEditor(container);
