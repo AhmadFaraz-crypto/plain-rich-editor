@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plain Rich Editor</title>
-  <link rel="stylesheet" href="dist/styles/editor.css">
+  <link rel="stylesheet" href="https://unpkg.com/plain-rich-editor@1.0.0/dist/styles/editor.css">
   <style>
     * {
       margin: 0;
@@ -166,6 +166,13 @@
     </div>
   </div>
 
+  <script type="importmap">
+    {
+      "imports": {
+        "plain-rich-editor": "https://unpkg.com/plain-rich-editor@1.0.0/dist/index.js"
+      }
+    }
+  </script>
   <script type="module">
     // Wait for DOM to be fully loaded
     if (document.readyState === 'loading') {
@@ -177,7 +184,7 @@
 
     async function initEditor() {
       try {
-        const { RichEditor } = await import('dist/index.js');
+        const { RichEditor } = await import('plain-rich-editor');
         
         const container = document.getElementById('editor-playground');
         
